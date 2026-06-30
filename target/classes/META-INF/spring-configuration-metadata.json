@@ -1,0 +1,14 @@
+{
+  "groups": [
+    {
+      "name": "app.storage",
+      "type": "com.example.EnterpriseStorageApplication.config.StorageProperties",
+      "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
+    }
+  ],
+  "properties": [],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}
