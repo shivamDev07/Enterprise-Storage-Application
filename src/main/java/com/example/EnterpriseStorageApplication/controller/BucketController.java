@@ -1,9 +1,28 @@
 package com.example.EnterpriseStorageApplication.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.example.EnterpriseStorageApplication.dto.BucketRequest;
+import com.example.EnterpriseStorageApplication.service.BucketService;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RequestMapping("/api/buckets")
 @RestController
 public class BucketController {
 
+    private final BucketService bucketService;
 
+    public BucketController(BucketService bucketService) {
+        this.bucketService = bucketService;
+    }
+
+    @PostMapping
+    public void createBucket(@RequestBody BucketRequest bucketRequest){
+
+    }
+
+    @GetMapping
+    public List<String> listBuckets(){
+        return bucketService.listBuckets();
+    }
 }

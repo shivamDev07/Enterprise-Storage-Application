@@ -16,7 +16,7 @@ import java.util.Objects;
 public class S3Config {
 
     @Autowired
-    private  StorageProperties storageProperties;
+    private StorageProperties storageProperties;
 
     @Bean
     public S3Client s3Client() {

@@ -6,7 +6,28 @@
       "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
     }
   ],
-  "properties": [],
+  "properties": [
+    {
+      "name": "app.storage.access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
+    },
+    {
+      "name": "app.storage.end-point",
+      "type": "java.lang.String",
+      "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
+    },
+    {
+      "name": "app.storage.region",
+      "type": "java.lang.String",
+      "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
+    },
+    {
+      "name": "app.storage.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
+    }
+  ],
   "hints": [],
   "ignored": {
     "properties": []
