@@ -1,12 +1,15 @@
 package com.example.EnterpriseStorageApplication.serviceImpl;
 
-import com.example.EnterpriseStorageApplication.config.S3Config;
+import com.example.EnterpriseStorageApplication.dto.BucketRequest;
 import com.example.EnterpriseStorageApplication.service.BucketService;
-import kotlin.collections.ArrayDeque;
+
+import com.example.EnterpriseStorageApplication.validator.BucketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.Bucket;
+import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
+import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
 import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
 
 import java.util.ArrayList;
@@ -24,9 +27,28 @@ public class BucketServiceImpl implements BucketService {
         List<Bucket> buckets = response.buckets();
 
         List<String> bucketNames = new ArrayList<>();
-        for (Bucket b : buckets){
-            bucketNames.add(b.name());
+        for (Bucket bucket : buckets){
+            bucketNames.add(bucket.name());
         }
         return bucketNames;
+    }
+
+    @Override
+    public boolean bucketExists(String bucketName) {
+        try {
+            HeadBucketRequest request = HeadBucketRequest.builder().bucket(bucketName).build();
+            s3Client.headBucket(request);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void createBucket(BucketRequest bucketRequest) {
+        String bucketName = bucketRequest.getBucketName();
+        BucketValidator.validate(bucketName);
+        CreateBucketRequest creationRequest = CreateBucketRequest.builder().bucket(bucketName).build();
+        s3Client.createBucket(creationRequest);
     }
 }

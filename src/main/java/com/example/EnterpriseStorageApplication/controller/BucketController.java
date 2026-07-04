@@ -18,7 +18,7 @@ public class BucketController {
 
     @PostMapping
     public void createBucket(@RequestBody BucketRequest bucketRequest){
-
+        bucketService.createBucket(bucketRequest);
     }
 
     @GetMapping
