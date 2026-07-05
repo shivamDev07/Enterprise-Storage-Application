@@ -1,16 +1,14 @@
 package com.example.EnterpriseStorageApplication.serviceImpl;
 
 import com.example.EnterpriseStorageApplication.dto.BucketRequest;
+import com.example.EnterpriseStorageApplication.exception.BucketNotFoundException;
 import com.example.EnterpriseStorageApplication.service.BucketService;
 
 import com.example.EnterpriseStorageApplication.validator.BucketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.Bucket;
-import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
-import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
-import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
+import software.amazon.awssdk.services.s3.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +48,15 @@ public class BucketServiceImpl implements BucketService {
         BucketValidator.validate(bucketName);
         CreateBucketRequest creationRequest = CreateBucketRequest.builder().bucket(bucketName).build();
         s3Client.createBucket(creationRequest);
+    }
+
+    @Override
+    public void deleteBucket(String bucketName) {
+        BucketValidator.validate(bucketName);
+        if (!bucketExists(bucketName))
+            throw new BucketNotFoundException(bucketName);
+
+        DeleteBucketRequest request = DeleteBucketRequest.builder().bucket(bucketName).build();
+        s3Client.deleteBucket(request);
     }
 }

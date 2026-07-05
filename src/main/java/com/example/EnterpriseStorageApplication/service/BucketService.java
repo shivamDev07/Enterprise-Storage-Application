@@ -8,5 +8,5 @@ public interface BucketService {
     List<String> listBuckets();
     boolean bucketExists(String bucketName);
     void createBucket(BucketRequest bucketRequest);
-//    String deleteBucket(String bucketName);
+    void deleteBucket(String bucketName);
 }

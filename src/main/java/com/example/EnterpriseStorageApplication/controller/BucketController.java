@@ -17,12 +17,19 @@ public class BucketController {
     }
 
     @PostMapping
-    public void createBucket(@RequestBody BucketRequest bucketRequest){
+    public String createBucket(@RequestBody BucketRequest bucketRequest){
         bucketService.createBucket(bucketRequest);
+        return "Bucket Created Successfully";
     }
 
     @GetMapping
     public List<String> listBuckets(){
         return bucketService.listBuckets();
+    }
+
+    @DeleteMapping("/{bucketName}")
+    public String deleteBucket(@PathVariable("bucketName") String bucketName){
+        bucketService.deleteBucket(bucketName);
+        return "Bucket Deleted Successfully";
     }
 }
