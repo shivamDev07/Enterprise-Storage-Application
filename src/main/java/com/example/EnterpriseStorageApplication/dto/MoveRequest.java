@@ -1,0 +1,33 @@
+package com.example.EnterpriseStorageApplication.dto;
+
+public class MoveRequest {
+    private String sourceBucket;
+    private String targetBucket;
+    private String objectKey;
+
+    public MoveRequest() {}
+
+    public String getSourceBucket() {
+        return sourceBucket;
+    }
+
+    public void setSourceBucket(String sourceBucket) {
+        this.sourceBucket = sourceBucket;
+    }
+
+    public String getTargetBucket() {
+        return targetBucket;
+    }
+
+    public void setTargetBucket(String targetBucket) {
+        this.targetBucket = targetBucket;
+    }
+
+    public String getObjectKey() {
+        return objectKey;
+    }
+
+    public void setObjectKey(String objectKey) {
+        this.objectKey = objectKey;
+    }
+}
