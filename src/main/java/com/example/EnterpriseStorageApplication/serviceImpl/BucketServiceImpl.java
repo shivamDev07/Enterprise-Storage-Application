@@ -16,8 +16,11 @@ import java.util.List;
 @Service
 public class BucketServiceImpl implements BucketService {
 
-    @Autowired
-    private S3Client s3Client;
+    private final S3Client s3Client;
+
+    public BucketServiceImpl(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
 
     @Override
     public List<String> listBuckets() {
