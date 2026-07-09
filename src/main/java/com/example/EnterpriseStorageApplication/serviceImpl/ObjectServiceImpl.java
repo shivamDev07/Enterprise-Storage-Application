@@ -1,22 +1,24 @@
 package com.example.EnterpriseStorageApplication.serviceImpl;
 
 import com.example.EnterpriseStorageApplication.dto.CopyRequest;
+import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
 import com.example.EnterpriseStorageApplication.dto.MoveRequest;
 import com.example.EnterpriseStorageApplication.dto.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
+import com.example.EnterpriseStorageApplication.exception.FileDownloadException;
 import com.example.EnterpriseStorageApplication.exception.FileUploadException;
 import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundException;
 import com.example.EnterpriseStorageApplication.repository.FIleMetadataRepository;
 import com.example.EnterpriseStorageApplication.service.ObjectService;
 import com.example.EnterpriseStorageApplication.util.ChecksumUtil;
 import com.example.EnterpriseStorageApplication.util.FileStatus;
-import io.minio.ListObjectsV1Response;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,37 @@ public class ObjectServiceImpl implements ObjectService {
     }
 
     @Override
+    public DownloadResponse download(String metadataId) {
+
+        FileMetadata metadata = repository.findById(metadataId)
+                .orElseThrow(() ->
+                        new MetadataNotFoundException(metadataId));
+
+        InputStream stream = getObject(metadata);
+
+        return new DownloadResponse(
+                metadata.getOriginalName(),
+                stream
+        );
+    }
+
+    private InputStream getObject(FileMetadata metadata) {
+
+        try {
+
+            GetObjectRequest request = GetObjectRequest.builder()
+                    .bucket(metadata.getBucketName())
+                    .key(metadata.getStoredName())
+                    .build();
+
+            return s3Client.getObject(request);
+
+        } catch (Exception ex) {
+            throw new FileDownloadException(ex.getMessage());
+        }
+    }
+
+    @Override
     public List<String> listObjects(String bucketName) {
         ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).build();
         ListObjectsV2Response response = s3Client.listObjectsV2(request);
@@ -113,38 +146,38 @@ public class ObjectServiceImpl implements ObjectService {
 
     @Override
     public void move(MoveRequest request) {
-//        CopyRequest copyRequest = new CopyRequest();
-//        copyRequest.setSourceBucket(request.getSourceBucket());
-//        copyRequest.setTargetBucket(request.getTargetBucket());
-//        copyRequest.setObjectKey(request.getObjectKey());
-//
-//        copy(copyRequest);
-//
-//        DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
-//                .bucket(request.getSourceBucket())
-//                .key(request.getObjectKey())
-//                .build();
-//
-//        s3Client.deleteObject(deleteRequest);
+        CopyRequest copyRequest = new CopyRequest();
+        copyRequest.setSourceBucket(request.getSourceBucket());
+        copyRequest.setTargetBucket(request.getTargetBucket());
+        copyRequest.setObjectKey(request.getObjectKey());
 
-//        FileMetadata metaData = repository.findBystoredName(request.getObjectKey())
-//                .orElseThrow(() -> new MetadataNotFoundException(request.getObjectKey()));
-//
-//        metaData.setBucketName(request.getTargetBucket());
-//        repository.save(metaData);
+        copy(copyRequest);
+
+        DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+                .bucket(request.getSourceBucket())
+                .key(request.getObjectKey())
+                .build();
+
+        s3Client.deleteObject(deleteRequest);
+
+        FileMetadata metaData = repository.findBystoredName(request.getObjectKey())
+                .orElseThrow(() -> new MetadataNotFoundException(request.getObjectKey()));
+
+        metaData.setBucketName(request.getTargetBucket());
+        repository.save(metaData);
     }
 
     @Override
     public void rename(RenameRequest request) {
-//        CopyObjectRequest copyRequest = CopyObjectRequest.builder()
-//                .sourceBucket(request.getBucketName())
-//                .sourceKey(request.getOldName())
-//                .destinationBucket(request.getBucketName())
-//                .destinationKey(request.getNewName())
-//                .build();
-//        s3Client.copyObject(copyRequest);
-//
-//        DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(request.getBucketName()).key(request.getOldName()).build();
-//        s3Client.deleteObject(deleteRequest);
+        CopyObjectRequest copyRequest = CopyObjectRequest.builder()
+                .sourceBucket(request.getBucketName())
+                .sourceKey(request.getOldName())
+                .destinationBucket(request.getBucketName())
+                .destinationKey(request.getNewName())
+                .build();
+        s3Client.copyObject(copyRequest);
+
+        DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(request.getBucketName()).key(request.getOldName()).build();
+        s3Client.deleteObject(deleteRequest);
     }
 }

@@ -1,15 +1,20 @@
 package com.example.EnterpriseStorageApplication.controller;
 
 import com.example.EnterpriseStorageApplication.dto.CopyRequest;
+import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
 import com.example.EnterpriseStorageApplication.dto.MoveRequest;
 import com.example.EnterpriseStorageApplication.dto.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import com.example.EnterpriseStorageApplication.service.ObjectService;
 import jakarta.validation.Valid;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -29,6 +34,22 @@ public class ObjectController {
             @RequestParam("uploadedBy")String uploadBy
             ){
         return objectService.upload(file, bucketName, uploadBy);
+    }
+
+    @GetMapping("/download/{metadataId}")
+    public ResponseEntity<InputStreamResource> download(
+            @PathVariable String metadataId) {
+
+        DownloadResponse response = objectService.download(metadataId);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" +
+                                response.getOriginalFileName() + "\""
+                )
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(new InputStreamResource(response.getInputStream()));
     }
 
     @GetMapping
