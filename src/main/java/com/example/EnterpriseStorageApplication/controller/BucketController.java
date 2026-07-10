@@ -2,6 +2,7 @@ package com.example.EnterpriseStorageApplication.controller;
 
 import com.example.EnterpriseStorageApplication.dto.BucketRequest;
 import com.example.EnterpriseStorageApplication.service.BucketService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class BucketController {
     }
 
     @PostMapping
-    public String createBucket(@RequestBody BucketRequest bucketRequest){
+    public String createBucket(@Valid @RequestBody BucketRequest bucketRequest){
         bucketService.createBucket(bucketRequest);
         return "Bucket Created Successfully";
     }

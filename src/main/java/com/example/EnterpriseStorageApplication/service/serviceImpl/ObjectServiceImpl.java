@@ -1,4 +1,4 @@
-package com.example.EnterpriseStorageApplication.serviceImpl;
+package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
 import com.example.EnterpriseStorageApplication.dto.CopyRequest;
 import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
@@ -11,7 +11,9 @@ import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundExcept
 import com.example.EnterpriseStorageApplication.repository.FIleMetadataRepository;
 import com.example.EnterpriseStorageApplication.service.ObjectService;
 import com.example.EnterpriseStorageApplication.util.ChecksumUtil;
+import com.example.EnterpriseStorageApplication.util.FileNameGenerator;
 import com.example.EnterpriseStorageApplication.util.FileStatus;
+import com.example.EnterpriseStorageApplication.util.FileTypeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -22,7 +24,6 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ObjectServiceImpl implements ObjectService {
@@ -40,13 +41,7 @@ public class ObjectServiceImpl implements ObjectService {
 
         try {
             String originalName = file.getOriginalFilename();
-            String extension = "";
-            int index = originalName.lastIndexOf(".");
-
-            if (index != -1)
-                extension = originalName.substring(index);
-
-            String storedName = UUID.randomUUID() + extension;
+            String storedName = FileNameGenerator.generate(originalName);
             String checkSum = ChecksumUtil.sha256(file.getInputStream());
 
             PutObjectRequest request = PutObjectRequest.builder()
@@ -68,6 +63,7 @@ public class ObjectServiceImpl implements ObjectService {
             metaData.setChecksum(checkSum);
             metaData.setEtag(response.eTag());
             metaData.setStatus(FileStatus.ACTIVE);
+            metaData.setFileType(FileTypeUtil.determineType(file.getContentType()));
 
             return repository.save(metaData);
 

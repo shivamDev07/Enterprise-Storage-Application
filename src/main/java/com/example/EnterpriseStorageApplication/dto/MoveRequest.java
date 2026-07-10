@@ -1,8 +1,16 @@
 package com.example.EnterpriseStorageApplication.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class MoveRequest {
+
+    @NotBlank(message = "Source bucket is required")
     private String sourceBucket;
+
+    @NotBlank(message = "Target bucket is required")
     private String targetBucket;
+
+    @NotBlank(message = "Object Key is required")
     private String objectKey;
 
     public MoveRequest() {}

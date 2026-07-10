@@ -29,12 +29,22 @@ public class FileMetadata {
 
     private String status;
 
+    private String fileType;
+
     public FileMetadata() {}
 
-    public FileMetadata(String id, String originalName, String storedName, String bucketName,
-                        Long fileSize, String contentType, String uploadedBy, Instant uploadedAt,
-                        String etag, String checksum, String status) {
-        super();
+    public FileMetadata(String id,
+                        String originalName,
+                        String storedName,
+                        String bucketName,
+                        Long fileSize,
+                        String contentType,
+                        String uploadedBy,
+                        Instant uploadedAt,
+                        String etag,
+                        String checksum,
+                        String status,
+                        String fileType) {
         this.id = id;
         this.originalName = originalName;
         this.storedName = storedName;
@@ -46,6 +56,7 @@ public class FileMetadata {
         this.etag = etag;
         this.checksum = checksum;
         this.status = status;
+        this.fileType = fileType;
     }
 
     public String getId() {
@@ -135,4 +146,8 @@ public class FileMetadata {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getFileType() {return fileType;}
+
+    public void setFileType(String fileType) {this.fileType = fileType;}
 }

@@ -60,6 +60,7 @@ public class GlobalExceptionHandler {
 
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, request.getRequestURI());
     }
+
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(ValidationException ex, HttpServletRequest request) {
 
@@ -80,6 +81,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(StorageException.class)
     public ResponseEntity<ErrorResponse> handleStorage(StorageException ex, HttpServletRequest request) {
+
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, request.getRequestURI());
+    }
+
+    @ExceptionHandler(InvalidBucketException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidBucket(InvalidBucketException ex, HttpServletRequest request) {
 
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, request.getRequestURI());
     }

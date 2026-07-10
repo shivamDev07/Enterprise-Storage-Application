@@ -1,11 +1,9 @@
-package com.example.EnterpriseStorageApplication.serviceImpl;
+package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
 import com.example.EnterpriseStorageApplication.dto.BucketRequest;
 import com.example.EnterpriseStorageApplication.exception.BucketNotFoundException;
 import com.example.EnterpriseStorageApplication.service.BucketService;
 
-import com.example.EnterpriseStorageApplication.validator.BucketValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
@@ -48,14 +46,12 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public void createBucket(BucketRequest bucketRequest) {
         String bucketName = bucketRequest.getBucketName();
-        BucketValidator.validate(bucketName);
         CreateBucketRequest creationRequest = CreateBucketRequest.builder().bucket(bucketName).build();
         s3Client.createBucket(creationRequest);
     }
 
     @Override
     public void deleteBucket(String bucketName) {
-        BucketValidator.validate(bucketName);
         if (!bucketExists(bucketName))
             throw new BucketNotFoundException(bucketName);
 

@@ -64,14 +64,14 @@ public class ObjectController {
     }
 
     @PostMapping("/copy")
-    public ResponseEntity<String> copy(@RequestBody CopyRequest request) {
+    public ResponseEntity<String> copy(@Valid @RequestBody CopyRequest request) {
         objectService.copy(request);
 
         return ResponseEntity.ok("Copied Successfully");
     }
 
     @PostMapping("/move")
-    public ResponseEntity<String> move(@RequestBody MoveRequest request) {
+    public ResponseEntity<String> move(@Valid @RequestBody MoveRequest request) {
         objectService.move(request);
         return ResponseEntity.ok("Moved Successfully");
     }
