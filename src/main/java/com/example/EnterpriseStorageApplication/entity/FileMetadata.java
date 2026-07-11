@@ -1,6 +1,7 @@
 package com.example.EnterpriseStorageApplication.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.Instant;
 
@@ -9,54 +10,41 @@ public class FileMetadata {
     @Id
     private String id;
 
+    @Indexed
     private String originalName;
 
     private String storedName;
 
+    @Indexed
     private String bucketName;
 
     private Long fileSize;
 
     private String contentType;
 
+    @Indexed
+    private String fileType;
+
+    @Indexed
     private String uploadedBy;
 
+    @Indexed
     private Instant uploadedAt;
+
+    private Instant updatedAt;
+
+    private Instant archivedAt;
+
+    private Instant deletedAt;
 
     private String etag;
 
     private String checksum;
 
-    private String status;
+    @Indexed
+    private FileStatus status;
 
-    private String fileType;
-
-    public FileMetadata() {}
-
-    public FileMetadata(String id,
-                        String originalName,
-                        String storedName,
-                        String bucketName,
-                        Long fileSize,
-                        String contentType,
-                        String uploadedBy,
-                        Instant uploadedAt,
-                        String etag,
-                        String checksum,
-                        String status,
-                        String fileType) {
-        this.id = id;
-        this.originalName = originalName;
-        this.storedName = storedName;
-        this.bucketName = bucketName;
-        this.fileSize = fileSize;
-        this.contentType = contentType;
-        this.uploadedBy = uploadedBy;
-        this.uploadedAt = uploadedAt;
-        this.etag = etag;
-        this.checksum = checksum;
-        this.status = status;
-        this.fileType = fileType;
+    public FileMetadata() {
     }
 
     public String getId() {
@@ -123,6 +111,30 @@ public class FileMetadata {
         this.uploadedAt = uploadedAt;
     }
 
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Instant getArchivedAt() {
+        return archivedAt;
+    }
+
+    public void setArchivedAt(Instant archivedAt) {
+        this.archivedAt = archivedAt;
+    }
+
+    public Instant getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Instant deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
     public String getEtag() {
         return etag;
     }
@@ -139,15 +151,19 @@ public class FileMetadata {
         this.checksum = checksum;
     }
 
-    public String getStatus() {
+    public FileStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(FileStatus status) {
         this.status = status;
     }
 
-    public String getFileType() {return fileType;}
+    public String getFileType() {
+        return fileType;
+    }
 
-    public void setFileType(String fileType) {this.fileType = fileType;}
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
 }

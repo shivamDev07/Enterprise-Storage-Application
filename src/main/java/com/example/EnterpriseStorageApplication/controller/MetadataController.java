@@ -6,8 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/metadat" +
-        "a")
+@RequestMapping("/api/metadata")
 public class MetadataController {
 
     private final MetadataService service;

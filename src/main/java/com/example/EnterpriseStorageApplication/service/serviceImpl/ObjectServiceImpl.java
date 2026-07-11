@@ -5,6 +5,7 @@ import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
 import com.example.EnterpriseStorageApplication.dto.MoveRequest;
 import com.example.EnterpriseStorageApplication.dto.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
+import com.example.EnterpriseStorageApplication.entity.FileStatus;
 import com.example.EnterpriseStorageApplication.exception.FileDownloadException;
 import com.example.EnterpriseStorageApplication.exception.FileUploadException;
 import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundException;
@@ -12,7 +13,6 @@ import com.example.EnterpriseStorageApplication.repository.FIleMetadataRepositor
 import com.example.EnterpriseStorageApplication.service.ObjectService;
 import com.example.EnterpriseStorageApplication.util.ChecksumUtil;
 import com.example.EnterpriseStorageApplication.util.FileNameGenerator;
-import com.example.EnterpriseStorageApplication.util.FileStatus;
 import com.example.EnterpriseStorageApplication.util.FileTypeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +44,8 @@ public class ObjectServiceImpl implements ObjectService {
             String storedName = FileNameGenerator.generate(originalName);
             String checkSum = ChecksumUtil.sha256(file.getInputStream());
 
+            Instant now = Instant.now();
+
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(storedName)
@@ -52,20 +54,21 @@ public class ObjectServiceImpl implements ObjectService {
 
             PutObjectResponse response = s3Client.putObject(request, RequestBody.fromBytes(file.getBytes()));
 
-            FileMetadata metaData = new FileMetadata();
-            metaData.setOriginalName(originalName);
-            metaData.setStoredName(storedName);
-            metaData.setBucketName(bucketName);
-            metaData.setFileSize(file.getSize());
-            metaData.setContentType(file.getContentType());
-            metaData.setUploadedBy(uploadBy);
-            metaData.setUploadedAt(Instant.now());
-            metaData.setChecksum(checkSum);
-            metaData.setEtag(response.eTag());
-            metaData.setStatus(FileStatus.ACTIVE);
-            metaData.setFileType(FileTypeUtil.determineType(file.getContentType()));
+            FileMetadata metadata = new FileMetadata();
+            metadata.setOriginalName(file.getOriginalFilename());
+            metadata.setStoredName(storedName);
+            metadata.setBucketName(bucketName);
+            metadata.setFileSize(file.getSize());
+            metadata.setContentType(file.getContentType());
+            metadata.setUploadedBy(uploadBy);
+            metadata.setUploadedAt(now);
+            metadata.setUpdatedAt(now);
+            metadata.setChecksum(checkSum);
+            metadata.setEtag(response.eTag());
+            metadata.setStatus(FileStatus.ACTIVE);
+            metadata.setFileType(FileTypeUtil.determineType(file.getContentType()));
 
-            return repository.save(metaData);
+            return repository.save(metadata);
 
         } catch (Exception e) {
             throw new FileUploadException(e.getMessage());
