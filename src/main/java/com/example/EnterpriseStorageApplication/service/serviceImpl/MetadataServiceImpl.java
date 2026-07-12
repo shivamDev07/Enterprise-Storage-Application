@@ -50,11 +50,11 @@ public class MetadataServiceImpl implements MetadataService {
         return repository.findByUploadedBy(uploadedBy, pageable);
     }
 
-    @Override
-    public Page<FileMetadata> searchByStatus(String status, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return repository.findByStatus(status, pageable);
-    }
+//    @Override
+//    public Page<FileMetadata> searchByStatus(String status, int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        return repository.findByStatus(status, pageable);
+//    }
 
     @Override
     public Page<FileMetadata> searchByFileType(String fileType, int page, int size) {

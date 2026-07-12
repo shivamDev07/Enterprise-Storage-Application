@@ -17,7 +17,7 @@ public interface MetadataService {
 
     Page<FileMetadata> searchByUser(String uploadedBy, int page, int size);
 
-    Page<FileMetadata> searchByStatus(String status, int page, int size);
+//    Page<FileMetadata> searchByStatus(String status, int page, int size);
 
     long count();
 

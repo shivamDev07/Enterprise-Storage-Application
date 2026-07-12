@@ -53,13 +53,13 @@ public class MetadataController {
         return service.searchByUser(uploadedBy, page, size);
     }
 
-    @GetMapping("/status/{status}")
-    public Page<FileMetadata> searchByStatus(@PathVariable String status,
-                                             @RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size) {
-
-        return service.searchByStatus(status, page, size);
-    }
+//    @GetMapping("/status/{status}")
+//    public Page<FileMetadata> searchByStatus(@PathVariable String status,
+//                                             @RequestParam(defaultValue = "0") int page,
+//                                             @RequestParam(defaultValue = "10") int size) {
+//
+//        return service.searchByStatus(status, page, size);
+//    }
 
     @GetMapping("/type/{fileType}")
     public Page<FileMetadata> searchByFileType(@PathVariable String fileType,
