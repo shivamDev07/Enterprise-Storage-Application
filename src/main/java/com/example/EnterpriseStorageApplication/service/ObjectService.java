@@ -1,7 +1,6 @@
 package com.example.EnterpriseStorageApplication.service;
 
 import com.example.EnterpriseStorageApplication.dto.CopyRequest;
-import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
 import com.example.EnterpriseStorageApplication.dto.MoveRequest;
 import com.example.EnterpriseStorageApplication.dto.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
