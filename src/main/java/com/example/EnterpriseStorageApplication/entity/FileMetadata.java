@@ -44,8 +44,7 @@ public class FileMetadata {
     @Indexed
     private FileStatus status;
 
-    public FileMetadata() {
-    }
+    public FileMetadata() {}
 
     public String getId() {
         return id;

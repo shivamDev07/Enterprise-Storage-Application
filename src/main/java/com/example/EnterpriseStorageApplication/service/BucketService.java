@@ -5,8 +5,11 @@ import com.example.EnterpriseStorageApplication.dto.BucketRequest;
 import java.util.List;
 
 public interface BucketService {
-    List<String> listBuckets();
-    boolean bucketExists(String bucketName);
-    void createBucket(BucketRequest bucketRequest);
+    void createBucket(String bucketName);
+
     void deleteBucket(String bucketName);
+
+    List<String> getAllBuckets();
+
+    boolean bucketExists(String bucketName);
 }

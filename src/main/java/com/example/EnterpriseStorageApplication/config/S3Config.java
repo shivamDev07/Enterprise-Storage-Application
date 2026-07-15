@@ -15,19 +15,19 @@ import java.util.Objects;
 @Configuration
 public class S3Config {
 
-    @Autowired
-    private StorageProperties storageProperties;
+    private final StorageProperties storageProperties;
+
+    public S3Config(StorageProperties storageProperties) {
+        this.storageProperties = storageProperties;
+    }
 
     @Bean
     public S3Client s3Client() {
-        Objects.requireNonNull(
-                storageProperties.getEndPoint(),
-                "MinIO endpoint is missing");
 
         return S3Client.builder()
                 .endpointOverride(
                         URI.create(
-                                storageProperties.getEndPoint()))
+                                storageProperties.getEndpoint()))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
                                 AwsBasicCredentials.create(

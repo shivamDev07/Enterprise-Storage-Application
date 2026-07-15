@@ -6,17 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "app.storage")
 public class StorageProperties {
-    private String endPoint;
+    private String endpoint;
     private String accessKey;
     private String secretKey;
-    private String region ;
+    private String region;
 
-    public String getEndPoint() {
-        return endPoint;
+    public String getEndpoint() {
+        return endpoint;
     }
 
-    public void setEndPoint(String endPoint) {
-        this.endPoint = endPoint;
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 
     public String getAccessKey() {

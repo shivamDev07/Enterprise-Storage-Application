@@ -13,8 +13,6 @@ public class BucketRequest {
 
     public BucketRequest() {}
 
-    public BucketRequest(String bucketName) {this.bucketName = bucketName;}
-
     public String getBucketName() {return bucketName;}
 
     public void setBucketName(String bucketName) {this.bucketName = bucketName;}

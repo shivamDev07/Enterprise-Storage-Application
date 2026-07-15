@@ -12,17 +12,20 @@ import java.util.List;
 
 public interface ObjectService {
 
-    FileMetadata upload(MultipartFile file, String bucketName, String uploadBy);
+    FileMetadata upload(
+            MultipartFile file,
+            String bucketName,
+            String uploadedBy);
 
-    DownloadResponse download(String metadataId);
+    InputStream download(String metadataId);
 
     void delete(String metadataId);
 
     List<String> listObjects(String bucketName);
 
-    void copy(CopyRequest copyRequest);
+    void copy(CopyRequest request);
 
-    void move(MoveRequest moveRequest);
+    void move(MoveRequest request);
 
-    void rename(RenameRequest renameRequest);
+    void rename(RenameRequest request);
 }

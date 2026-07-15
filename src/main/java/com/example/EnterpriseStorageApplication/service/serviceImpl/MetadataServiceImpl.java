@@ -1,6 +1,7 @@
 package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
+import com.example.EnterpriseStorageApplication.entity.FileStatus;
 import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundException;
 import com.example.EnterpriseStorageApplication.repository.FIleMetadataRepository;
 import com.example.EnterpriseStorageApplication.service.MetadataService;
@@ -50,11 +51,11 @@ public class MetadataServiceImpl implements MetadataService {
         return repository.findByUploadedBy(uploadedBy, pageable);
     }
 
-//    @Override
-//    public Page<FileMetadata> searchByStatus(String status, int page, int size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return repository.findByStatus(status, pageable);
-//    }
+    @Override
+    public Page<FileMetadata> searchByStatus(FileStatus status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findByStatus(status, pageable);
+    }
 
     @Override
     public Page<FileMetadata> searchByFileType(String fileType, int page, int size) {

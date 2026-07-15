@@ -13,7 +13,7 @@
       "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
     },
     {
-      "name": "app.storage.end-point",
+      "name": "app.storage.endpoint",
       "type": "java.lang.String",
       "sourceType": "com.example.EnterpriseStorageApplication.config.StorageProperties"
     },

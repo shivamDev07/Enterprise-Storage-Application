@@ -4,38 +4,26 @@ import jakarta.validation.constraints.NotBlank;
 
 public class RenameRequest {
 
-    @NotBlank(message = "Bucket Name is required")
+    @NotBlank(message = "Bucket name is required")
     private String bucketName;
 
-    @NotBlank(message = "Old Name is required")
-    private String oldName;
+    @NotBlank(message = "Old name is required")
+    private String oldStoredName;
 
-    @NotBlank(message = "New Name is required")
-    private String newName;
+    @NotBlank(message = "New name is required")
+    private String newStoredName;
 
     public RenameRequest() {}
 
-    public String getBucketName() {
-        return bucketName;
-    }
+    public String getBucketName() {return bucketName;}
 
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
+    public void setBucketName(String bucketName) {this.bucketName = bucketName;}
 
-    public String getOldName() {
-        return oldName;
-    }
+    public String getOldStoredName() {return oldStoredName;}
 
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
-    }
+    public void setOldStoredName(String oldStoredName) {this.oldStoredName = oldStoredName;}
 
-    public String getNewName() {
-        return newName;
-    }
+    public String getNewStoredName() {return newStoredName;}
 
-    public void setNewName(String newName) {
-        this.newName = newName;
-    }
+    public void setNewStoredName(String newStoredName) {this.newStoredName = newStoredName;}
 }

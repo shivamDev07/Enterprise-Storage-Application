@@ -1,36 +1,32 @@
-package com.example.EnterpriseStorageApplication.lifecycle.validator;
+package com.example.EnterpriseStorageApplication.validator;
 
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
-import com.example.EnterpriseStorageApplication.exception.ValidationException;
 import com.example.EnterpriseStorageApplication.entity.FileStatus;
+import com.example.EnterpriseStorageApplication.exception.ValidationException;
 
 public final class LifecycleValidator {
-    private LifecycleValidator() {
-    }
+
+    private LifecycleValidator() {}
 
     public static void validateArchive(FileMetadata metadata) {
 
-        if (metadata.getStatus() == FileStatus.ARCHIVED) {
+        if (metadata.getStatus() == FileStatus.ARCHIVED)
             throw new ValidationException("File is already archived.");
-        }
 
-        if (metadata.getStatus() == FileStatus.DELETED) {
+        if (metadata.getStatus() == FileStatus.DELETED)
             throw new ValidationException("Deleted file cannot be archived.");
-        }
     }
 
     public static void validateRestore(FileMetadata metadata) {
 
-        if (metadata.getStatus() == FileStatus.ACTIVE) {
+        if (metadata.getStatus() == FileStatus.ACTIVE)
             throw new ValidationException("File is already active.");
-        }
     }
 
     public static void validateSoftDelete(FileMetadata metadata) {
 
-        if (metadata.getStatus() == FileStatus.DELETED) {
+        if (metadata.getStatus() == FileStatus.DELETED)
             throw new ValidationException("File is already deleted.");
-        }
     }
 
     public static void validatePermanentDelete(FileMetadata metadata) {

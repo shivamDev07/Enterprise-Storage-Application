@@ -1,15 +1,15 @@
 package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
-import com.example.EnterpriseStorageApplication.dto.BucketRequest;
 import com.example.EnterpriseStorageApplication.exception.BucketNotFoundException;
+import com.example.EnterpriseStorageApplication.exception.InvalidFileException;
 import com.example.EnterpriseStorageApplication.service.BucketService;
 
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BucketServiceImpl implements BucketService {
@@ -21,15 +21,34 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public List<String> listBuckets() {
-        ListBucketsResponse response = s3Client.listBuckets();
-        List<Bucket> buckets = response.buckets();
+    public void createBucket(String bucketName) {
+        if (bucketExists(bucketName))
+            throw new BucketNotFoundException(bucketName);
 
-        List<String> bucketNames = new ArrayList<>();
-        for (Bucket bucket : buckets){
-            bucketNames.add(bucket.name());
-        }
-        return bucketNames;
+        CreateBucketRequest request = CreateBucketRequest.builder().bucket(bucketName).build();
+
+        s3Client.createBucket(request);
+    }
+
+    @Override
+    public void deleteBucket(String bucketName) {
+
+        if (bucketName == null || bucketName.trim().isEmpty())
+            throw new InvalidFileException("Bucket name cannot be empty");
+
+        if (!bucketExists(bucketName))
+            throw new BucketNotFoundException(bucketName);
+
+        DeleteBucketRequest request = DeleteBucketRequest.builder().bucket(bucketName).build();
+
+        s3Client.deleteBucket(request);
+    }
+
+    @Override
+    public List<String> getAllBuckets() {
+        ListBucketsResponse response = s3Client.listBuckets();
+
+        return response.buckets().stream().map(Bucket::name).collect(Collectors.toList());
     }
 
     @Override
@@ -38,24 +57,9 @@ public class BucketServiceImpl implements BucketService {
             HeadBucketRequest request = HeadBucketRequest.builder().bucket(bucketName).build();
             s3Client.headBucket(request);
             return true;
-        } catch (Exception e) {
+
+        } catch (Exception ex) {
             return false;
         }
-    }
-
-    @Override
-    public void createBucket(BucketRequest bucketRequest) {
-        String bucketName = bucketRequest.getBucketName();
-        CreateBucketRequest creationRequest = CreateBucketRequest.builder().bucket(bucketName).build();
-        s3Client.createBucket(creationRequest);
-    }
-
-    @Override
-    public void deleteBucket(String bucketName) {
-        if (!bucketExists(bucketName))
-            throw new BucketNotFoundException(bucketName);
-
-        DeleteBucketRequest request = DeleteBucketRequest.builder().bucket(bucketName).build();
-        s3Client.deleteBucket(request);
     }
 }

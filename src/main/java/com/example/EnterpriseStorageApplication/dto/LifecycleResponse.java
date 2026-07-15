@@ -1,9 +1,8 @@
-package com.example.EnterpriseStorageApplication.lifecycle.dto;
+package com.example.EnterpriseStorageApplication.dto;
 
 import java.time.Instant;
 
 public class LifecycleResponse {
-
     private String fileId;
 
     private String originalName;

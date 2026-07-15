@@ -1,6 +1,7 @@
 package com.example.EnterpriseStorageApplication.controller;
 
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
+import com.example.EnterpriseStorageApplication.entity.FileStatus;
 import com.example.EnterpriseStorageApplication.service.MetadataService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -53,13 +54,13 @@ public class MetadataController {
         return service.searchByUser(uploadedBy, page, size);
     }
 
-//    @GetMapping("/status/{status}")
-//    public Page<FileMetadata> searchByStatus(@PathVariable String status,
-//                                             @RequestParam(defaultValue = "0") int page,
-//                                             @RequestParam(defaultValue = "10") int size) {
-//
-//        return service.searchByStatus(status, page, size);
-//    }
+    @GetMapping("/status/{status}")
+    public Page<FileMetadata> searchByStatus(@PathVariable FileStatus status,
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
+
+        return service.searchByStatus(status, page, size);
+    }
 
     @GetMapping("/type/{fileType}")
     public Page<FileMetadata> searchByFileType(@PathVariable String fileType,
