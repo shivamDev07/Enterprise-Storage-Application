@@ -1,6 +1,6 @@
 package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
-import com.example.EnterpriseStorageApplication.dto.LifecycleResponse;
+import com.example.EnterpriseStorageApplication.dto.response.LifecycleResponse;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import com.example.EnterpriseStorageApplication.entity.FileStatus;
 import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundException;

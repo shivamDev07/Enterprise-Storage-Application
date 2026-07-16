@@ -1,9 +1,8 @@
 package com.example.EnterpriseStorageApplication.service.serviceImpl;
 
-import com.example.EnterpriseStorageApplication.dto.CopyRequest;
-import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
-import com.example.EnterpriseStorageApplication.dto.MoveRequest;
-import com.example.EnterpriseStorageApplication.dto.RenameRequest;
+import com.example.EnterpriseStorageApplication.dto.request.CopyRequest;
+import com.example.EnterpriseStorageApplication.dto.request.MoveRequest;
+import com.example.EnterpriseStorageApplication.dto.request.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import com.example.EnterpriseStorageApplication.entity.FileStatus;
 import com.example.EnterpriseStorageApplication.exception.FileDownloadException;
@@ -26,7 +25,6 @@ import software.amazon.awssdk.services.s3.model.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

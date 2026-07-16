@@ -1,9 +1,8 @@
 package com.example.EnterpriseStorageApplication.controller;
 
-import com.example.EnterpriseStorageApplication.dto.CopyRequest;
-import com.example.EnterpriseStorageApplication.dto.DownloadResponse;
-import com.example.EnterpriseStorageApplication.dto.MoveRequest;
-import com.example.EnterpriseStorageApplication.dto.RenameRequest;
+import com.example.EnterpriseStorageApplication.dto.request.CopyRequest;
+import com.example.EnterpriseStorageApplication.dto.request.MoveRequest;
+import com.example.EnterpriseStorageApplication.dto.request.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import com.example.EnterpriseStorageApplication.exception.MetadataNotFoundException;
 import com.example.EnterpriseStorageApplication.repository.FIleMetadataRepository;

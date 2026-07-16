@@ -1,6 +1,6 @@
 package com.example.EnterpriseStorageApplication.controller;
 
-import com.example.EnterpriseStorageApplication.dto.LifecycleResponse;
+import com.example.EnterpriseStorageApplication.dto.response.LifecycleResponse;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import com.example.EnterpriseStorageApplication.service.LifecycleService;
 import org.springframework.data.domain.Page;

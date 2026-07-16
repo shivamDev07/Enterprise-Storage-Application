@@ -1,6 +1,6 @@
 package com.example.EnterpriseStorageApplication.controller;
 
-import com.example.EnterpriseStorageApplication.dto.BucketRequest;
+import com.example.EnterpriseStorageApplication.dto.request.BucketRequest;
 import com.example.EnterpriseStorageApplication.service.BucketService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

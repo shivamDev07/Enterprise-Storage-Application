@@ -1,7 +1,5 @@
 package com.example.EnterpriseStorageApplication.service;
 
-import com.example.EnterpriseStorageApplication.dto.BucketRequest;
-
 import java.util.List;
 
 public interface BucketService {

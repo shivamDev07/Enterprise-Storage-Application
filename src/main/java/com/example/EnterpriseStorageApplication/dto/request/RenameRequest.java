@@ -1,4 +1,4 @@
-package com.example.EnterpriseStorageApplication.dto;
+package com.example.EnterpriseStorageApplication.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

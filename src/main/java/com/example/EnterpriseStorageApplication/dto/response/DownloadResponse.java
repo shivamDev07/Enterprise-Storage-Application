@@ -1,4 +1,4 @@
-package com.example.EnterpriseStorageApplication.dto;
+package com.example.EnterpriseStorageApplication.dto.response;
 
 import java.io.InputStream;
 

@@ -1,8 +1,8 @@
 package com.example.EnterpriseStorageApplication.service;
 
-import com.example.EnterpriseStorageApplication.dto.CopyRequest;
-import com.example.EnterpriseStorageApplication.dto.MoveRequest;
-import com.example.EnterpriseStorageApplication.dto.RenameRequest;
+import com.example.EnterpriseStorageApplication.dto.request.CopyRequest;
+import com.example.EnterpriseStorageApplication.dto.request.MoveRequest;
+import com.example.EnterpriseStorageApplication.dto.request.RenameRequest;
 import com.example.EnterpriseStorageApplication.entity.FileMetadata;
 import org.springframework.web.multipart.MultipartFile;
 
